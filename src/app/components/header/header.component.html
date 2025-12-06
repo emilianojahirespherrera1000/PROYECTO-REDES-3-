@@ -1,0 +1,76 @@
+<header class="header">
+  <div class="header-content">
+    
+    <!-- Search Bar -->
+    <div class="search-container">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Buscar combis, rutas, usuarios..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()">
+    </div>
+
+    <!-- Right Section -->
+    <div class="header-actions">
+      
+      <!-- Notifications -->
+      <div class="notification-wrapper">
+        <button 
+          mat-icon-button 
+          class="notification-btn"
+          (click)="toggleNotifications()"
+          [matBadge]="unreadCount"
+          [matBadgeHidden]="unreadCount === 0"
+          matBadgeColor="warn"
+          matBadgeSize="small">
+          <mat-icon>notifications</mat-icon>
+        </button>
+
+        <!-- Notifications Dropdown -->
+        <div class="notifications-dropdown" *ngIf="showNotifications">
+          <div class="notifications-header">
+            <h3>Notificaciones</h3>
+            <button mat-button class="mark-read-btn" (click)="markAllAsRead()">
+              Marcar todas como leídas
+            </button>
+          </div>
+
+          <div class="notifications-list">
+            <div 
+              *ngFor="let notification of notifications"
+              class="notification-item"
+              [class.notification-unread]="!notification.read"
+              (click)="markAsRead(notification)">
+              <div class="notification-content">
+                <mat-icon [ngClass]="getNotificationClass(notification.type)">
+                  {{getNotificationIcon(notification.type)}}
+                </mat-icon>
+                <div class="notification-text">
+                  <p class="notification-message">{{notification.message}}</p>
+                  <span class="notification-time">{{notification.time}}</span>
+                </div>
+              </div>
+              <div class="notification-indicator" *ngIf="!notification.read"></div>
+            </div>
+          </div>
+
+          <div class="notifications-footer">
+            <button mat-button color="primary">Ver todas</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Status -->
+      <div class="system-status gradient-blue-red">
+        <mat-icon>check_circle</mat-icon>
+        <span>Sistema Operativo</span>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- Overlay for notifications -->
+<div class="overlay" *ngIf="showNotifications" (click)="toggleNotifications()"></div>
