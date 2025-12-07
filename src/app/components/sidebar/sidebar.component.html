@@ -1,2 +1,45 @@
 
 
+<aside class="sidebar" [class.sidebar-open]="isOpen" [class.sidebar-closed]="!isOpen">
+  <div class="sidebar-header">
+    <div class="logo-container" *ngIf="isOpen">
+      <div class="logo-icon gradient-blue-red">
+        <mat-icon>directions_bus</mat-icon>
+      </div>
+      <div class="logo-text">
+        <h1 class="logo-title">RutaSmart</h1>
+        <p class="logo-subtitle">Admin Panel</p>
+      </div>
+    </div>
+    <button mat-icon-button class="toggle-btn" (click)="onToggleSidebar()">
+      <mat-icon>{{ isOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <button 
+      *ngFor="let item of menuItems"
+      class="nav-item"
+      [class.nav-item-active]="isActive(item.id)"
+      [class.nav-item-blue]="item.color === 'blue'"
+      [class.nav-item-red]="item.color === 'red'"
+      (click)="navigateTo(item.route, item.id)"
+      [matTooltip]="!isOpen ? item.label : ''"
+      matTooltipPosition="right">
+      <mat-icon class="nav-icon">{{item.icon}}</mat-icon>
+      <span class="nav-label" *ngIf="isOpen">{{item.label}}</span>
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar gradient-blue-red">
+        <span>AD</span>
+      </div>
+      <div class="user-info" *ngIf="isOpen">
+        <p class="user-name">Admin User</p>
+        <p class="user-email">admin&#64;rutasmart.mx</p>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -24,9 +24,13 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox'; // AGREGADO
 
 // Routing
 import { AppRoutingModule } from './app.routes';
+
+// Guards
+import { AuthGuard } from './guards/auth.guard';
 
 // Components
 import { AppComponent } from './app.component';
@@ -59,9 +63,6 @@ import { AnalyticsComponent } from './components/reports/analytics/analytics.com
 // Replication Components
 import { ReplicationStatusComponent } from './components/replication/replication-status/replication-status.component';
 
-// Settings
-
-
 // Services
 import { AuthService } from './services/auth.service';
 import { BusService } from './services/bus.service';
@@ -90,7 +91,6 @@ import { WebsocketService } from './services/websocket.service';
     SystemLogsComponent,
     AnalyticsComponent,
     ReplicationStatusComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -118,9 +118,11 @@ import { WebsocketService } from './services/websocket.service';
     MatChipsModule,
     MatBadgeModule,
     MatTooltipModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule // AGREGADO
   ],
   providers: [
+    AuthGuard, // AGREGADO
     AuthService,
     BusService,
     RouteService,

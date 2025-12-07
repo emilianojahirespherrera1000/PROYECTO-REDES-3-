@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Componentes (Asegúrate de que las rutas a los archivos sean correctas)
+// Guards
+import { AuthGuard } from './guards/auth.guard';
+
+// Componentes
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BusListComponent } from './components/buses/bus-list/bus-list.component';
@@ -17,14 +20,20 @@ import { SystemLogsComponent } from './components/reports/system-logs/system-log
 import { AnalyticsComponent } from './components/reports/analytics/analytics.component';
 import { ReplicationStatusComponent } from './components/replication/replication-status/replication-status.component';
 
-// IMPORTANTE: Aquí agregamos 'export' para que otros archivos puedan ver las rutas
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  // Redirigir raíz a login
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  
+  // Ruta de login (sin protección)
   { path: 'login', component: LoginComponent },
+  
+  // Dashboard protegido con AuthGuard
   { 
     path: 'dashboard', 
     component: DashboardComponent,
+    canActivate: [AuthGuard], // Protección con guard
     children: [
+      { path: '', redirectTo: 'tracking', pathMatch: 'full' }, // Ruta por defecto del dashboard
       { path: 'buses', component: BusListComponent },
       { path: 'buses/:id', component: BusDetailComponent },
       { path: 'tracking', component: BusTrackingComponent },
@@ -39,7 +48,9 @@ export const routes: Routes = [
       { path: 'replication', component: ReplicationStatusComponent }
     ]
   },
-  { path: '**', redirectTo: '/dashboard' }
+  
+  // Cualquier ruta no encontrada redirige a login
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({
