@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Ruta' : 'Nueva Ruta' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+
+    <mat-form-field appearance="outline">
+      <mat-label>ID Ruta</mat-label>
+      <input matInput formControlName="id" placeholder="Ej: R-01">
+    </mat-form-field>
+
+    <div style="display: flex; gap: 12px;">
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Origen</mat-label>
+        <input matInput formControlName="origin" placeholder="Ej: Penal">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="flex: 1;">
+        <mat-label>Destino</mat-label>
+        <input matInput formControlName="destination" placeholder="Ej: Centro">
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Distancia</mat-label>
+      <input matInput formControlName="distancia" placeholder="Ej: 12.5 km">
+      <mat-icon matSuffix>straighten</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tiempo Promedio</mat-label>
+      <input matInput formControlName="tiempo_promedio" placeholder="Ej: 45 min">
+      <mat-icon matSuffix>schedule</mat-icon>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button class="gradient-blue-red btn-save-dialog" 
+          [disabled]="form.invalid" 
+          (click)="save()">
+    Guardar
+  </button>
+</mat-dialog-actions>

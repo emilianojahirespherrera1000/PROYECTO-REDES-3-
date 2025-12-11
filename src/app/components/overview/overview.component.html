@@ -1,0 +1,97 @@
+<div class="welcome-banner gradient-blue-red">
+  <div class="welcome-content">
+    <h2 class="welcome-title">¡Bienvenido al Panel de Control!</h2>
+    <p class="welcome-subtitle">Monitorea y gestiona el sistema RutaSmart Ags en tiempo real</p>
+    <div class="welcome-info">
+      <div class="info-item">
+        <mat-icon>access_time</mat-icon>
+        <span>Última actualización: Hace instantes</span>
+      </div>
+      <div class="info-item">
+        <mat-icon>storage</mat-icon>
+        <span>Replicación: Activa</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div *ngFor="let stat of statsCards" class="stat-card" [class.stat-blue]="stat.color === 'blue'"
+    [class.stat-red]="stat.color === 'red'">
+    <div class="stat-header">
+      <div class="stat-icon">
+        <mat-icon>{{stat.icon}}</mat-icon>
+      </div>
+      <span class="stat-change">{{stat.change}}</span>
+    </div>
+    <h3 class="stat-value">{{stat.value}}</h3>
+    <p class="stat-label">{{stat.label}}</p>
+  </div>
+</div>
+
+<div class="tracking-activity-grid">
+
+  <div class="tracking-section card">
+    <div class="section-header">
+      <h3 class="section-title">
+        <mat-icon class="title-icon">show_chart</mat-icon>
+        Tracking en Vivo
+      </h3>
+      <button mat-button color="primary" class="view-all-btn">Ver todo →</button>
+    </div>
+
+    <div class="tracking-list">
+      <div *ngFor="let bus of liveTracking" class="tracking-item">
+        <div class="tracking-info">
+          <div class="bus-badge gradient-blue-red">{{bus.id}}</div>
+          <div class="bus-details">
+            <p class="bus-location">{{bus.location}}</p>
+            <p class="bus-passengers">{{bus.passengers}} pasajeros</p>
+          </div>
+        </div>
+        <div class="tracking-status">
+          <span class="status-badge" [ngClass]="getStatusClass(bus.status)">
+            {{bus.status}}
+          </span>
+          <p class="eta-time">ETA: {{bus.eta}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-section card">
+    <h3 class="section-title">
+      <mat-icon class="title-icon">trending_up</mat-icon>
+      Actividad Reciente
+    </h3>
+
+    <div class="activity-list">
+      <div *ngFor="let activity of recentActivity" class="activity-item">
+        <mat-icon [ngClass]="getActivityClass(activity.type)">{{activity.icon}}</mat-icon>
+        <div class="activity-content">
+          <p class="activity-message">{{activity.message}}</p>
+          <p class="activity-time">{{activity.time}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="infrastructure-section card">
+  <h3 class="section-title">
+    <mat-icon class="title-icon">dns</mat-icon>
+    Estado de Infraestructura
+  </h3>
+
+  <div class="infrastructure-grid">
+    <div *ngFor="let infra of infrastructureStatus; let i = index" class="infra-card" [class.infra-blue]="i === 0"
+      [class.infra-red]="i === 1" [class.infra-green]="i === 2">
+      <div class="infra-header">
+        <p class="infra-name">{{infra.name}}</p>
+        <mat-icon class="status-icon">check_circle</mat-icon>
+      </div>
+      <p class="infra-ip">{{infra.ip}}</p>
+      <p class="infra-detail">{{infra.detail}}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="page-container">
+  
+  <div class="page-header">
+    <div class="header-text">
+      <h2 class="page-title">Catálogo de Rutas</h2>
+      <p class="page-subtitle">Configuración de trayectos, distancias y tiempos estimados.</p>
+    </div>
+    
+    <button mat-flat-button class="btn-primary-action gradient-blue-red" (click)="openDialog()">
+      <mat-icon>add_road</mat-icon> Nueva Ruta
+    </button>
+  </div>
+
+  <div class="content-card">
+
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Cargando rutas cifradas...</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Trayecto (Origen <mat-icon class="th-icon">arrow_right_alt</mat-icon> Destino)</th>
+            <th>Distancia</th>
+            <th>Tiempo Promedio</th>
+            <th>Eficiencia</th>
+            <th class="text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let route of routes">
+            <td>
+              <div class="route-badge">
+                <mat-icon>route</mat-icon>
+                <span>{{route.id}}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="journey-visual">
+                <span class="point start">{{ getOrigin(route.nombre) }}</span>
+                <div class="arrow-connector">
+                  <mat-icon>arrow_forward</mat-icon>
+                </div>
+                <span class="point end">{{ getDestination(route.nombre) }}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="metric-item">
+                <mat-icon class="icon-grey">straighten</mat-icon>
+                <span>{{route.distancia}}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="metric-item">
+                <mat-icon class="icon-grey">schedule</mat-icon>
+                <span>{{route.tiempo_promedio}}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="efficiency-bar-wrapper" matTooltip="Tráfico fluido">
+                <div class="efficiency-bar" style="width: 85%"></div>
+              </div>
+              <span class="efficiency-text">Alta</span>
+            </td>
+
+            <td class="text-right">
+              <button mat-icon-button class="action-btn edit" (click)="openDialog(route)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-btn delete" (click)="deleteRoute(route)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && routes.length === 0">
+      <mat-icon>map</mat-icon>
+      <p>No hay rutas configuradas en el sistema.</p>
+    </div>
+
+  </div>
+</div>

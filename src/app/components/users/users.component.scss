@@ -1,0 +1,107 @@
+// Animación
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-container { animation: fadeIn 0.4s ease-in-out; }
+
+/* --- HEADER & CARD --- */
+.page-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+  .page-title { font-size: 1.5rem; font-weight: 700; color: #1e293b; margin: 0; }
+  .page-subtitle { color: #64748b; margin: 0.25rem 0 0 0; font-size: 0.95rem; }
+}
+
+.btn-add {
+  color: white !important; font-weight: 600; border-radius: 8px; padding: 0 20px; height: 42px;
+  mat-icon { margin-right: 8px; }
+}
+
+.content-card {
+  background: white; border-radius: 16px; padding: 2rem; /* Espaciado amplio */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden;
+}
+
+/* --- TABLE --- */
+.table-responsive { overflow-x: auto; }
+.modern-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  th {
+    text-align: left; padding: 1.25rem 1.5rem; font-size: 0.85rem; font-weight: 600;
+    color: #64748b; border-bottom: 1px solid #e2e8f0; text-transform: uppercase;
+  }
+  td {
+    padding: 1.25rem 1.5rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; color: #334155;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background-color: #f8fafc; }
+}
+
+/* --- USER PROFILE (Avatar + Text) --- */
+.user-profile {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%; color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
+  
+  &.bg-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+  &.bg-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+  &.bg-teal { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+}
+
+.user-details {
+  display: flex; flex-direction: column;
+  .user-email { font-weight: 600; color: #1e293b; }
+  .user-id { font-size: 0.75rem; color: #94a3b8; }
+}
+
+/* --- ROLE BADGE --- */
+.role-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+  
+  .role-icon { font-size: 16px; width: 16px; height: 16px; }
+
+  &.role-admin { background-color: #f3e8ff; color: #7e22ce; }
+  &.role-manager { background-color: #dbeafe; color: #1e40af; }
+  &.role-support { background-color: #ccfbf1; color: #0f766e; }
+}
+
+/* --- ACCESS INFO --- */
+.access-info {
+  display: flex; align-items: center; gap: 8px; color: #475569; font-size: 0.9rem;
+  .icon-grey { font-size: 18px; width: 18px; height: 18px; color: #94a3b8; }
+}
+
+/* --- STATUS DOT --- */
+.status-indicator {
+  display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 500;
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .green { background-color: #10b981; box-shadow: 0 0 0 3px #d1fae5; }
+}
+
+/* --- ACTIONS --- */
+.text-right { text-align: right; }
+.action-btn {
+  color: #94a3b8; transition: all 0.2s;
+  &:hover { background-color: #f1f5f9; }
+  &.key:hover { color: #f59e0b; }
+  &.edit:hover { color: #3b82f6; }
+  &.delete:hover { color: #ef4444; }
+}
+
+/* --- LOADING --- */
+.loading-state, .empty-state {
+  padding: 4rem; text-align: center; color: #64748b;
+  p { margin-top: 1rem; }
+}
+.spinner {
+  width: 40px; height: 40px; border: 3px solid #e2e8f0;
+  border-top-color: #3b82f6; border-radius: 50%; margin: 0 auto;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

@@ -1,0 +1,88 @@
+<div class="page-container">
+  
+  <div class="page-header">
+    <div class="header-text">
+      <h2 class="page-title">Control de Acceso</h2>
+      <p class="page-subtitle">Gestión de usuarios, roles y permisos del sistema.</p>
+    </div>
+    
+    <button mat-flat-button class="btn-primary-action gradient-blue-red" (click)="openDialog()">
+      <mat-icon>person_add</mat-icon>
+      Nuevo Usuario
+    </button>
+  </div>
+
+  <div class="content-card">
+
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Consultando directorio activo cifrado...</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Usuario / Email</th>
+            <th>Rol Asignado</th>
+            <th>Último Acceso</th>
+            <th>Estado</th>
+            <th class="text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            
+            <td>
+              <div class="user-profile">
+                <div class="avatar" [ngClass]="getAvatarColor(user.rol)">
+                  {{ getInitials(user.email) }}
+                </div>
+                <div class="user-details">
+                  <span class="user-email">{{user.email}}</span>
+                  <span class="user-id">ID: #{{user.id}}</span>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span class="role-badge" [ngClass]="getRoleClass(user.rol)">
+                <mat-icon class="role-icon">{{ getRoleIcon(user.rol) }}</mat-icon>
+                {{user.rol}}
+              </span>
+            </td>
+
+            <td>
+              <div class="access-info">
+                <mat-icon class="icon-grey">calendar_today</mat-icon>
+                <span>{{user.ultimo_acceso}}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="status-indicator">
+                <div class="dot green"></div>
+                <span>Habilitado</span>
+              </div>
+            </td>
+
+            <td class="text-right">
+              <button mat-icon-button class="action-btn edit" (click)="openDialog(user)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-btn delete" (click)="deleteUser(user)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && users.length === 0">
+      <mat-icon>group_off</mat-icon>
+      <p>No se encontraron usuarios en la base de datos.</p>
+    </div>
+
+  </div>
+</div>

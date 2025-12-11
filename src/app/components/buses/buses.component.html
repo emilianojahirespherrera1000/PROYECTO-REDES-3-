@@ -1,0 +1,80 @@
+<div class="page-container">
+  
+  <div class="page-header">
+    <div class="header-text">
+      <h2 class="page-title">Gestión de Unidades</h2>
+      <p class="page-subtitle">Administra la flota de combis, choferes y estados.</p>
+    </div>
+    
+    <button mat-flat-button class="btn-primary-action gradient-blue-red" (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+      Nueva Unidad
+    </button>
+  </div>
+
+  <div class="content-card">
+    
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Descifrando datos del NFS...</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>ID Unidad</th>
+            <th>Información</th>
+            <th>Chofer</th>
+            <th>Estado</th>
+            <th class="text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bus of buses">
+            <td>
+              <span class="id-badge">{{bus.id}}</span>
+            </td>
+            
+            <td>
+              <div class="bus-info">
+                <span class="bus-model">{{bus.modelo}}</span>
+                <span class="bus-plate">{{bus.placa}}</span>
+              </div>
+            </td>
+            
+            <td>
+              <div class="driver-info">
+                <div class="driver-avatar">
+                  {{bus.chofer.charAt(0)}}
+                </div>
+                <span>{{bus.chofer}}</span>
+              </div>
+            </td>
+            
+            <td>
+              <span class="status-pill" [ngClass]="getStatusClass(bus.status)">
+                {{bus.status}}
+              </span>
+            </td>
+            
+            <td class="text-right">
+              <button mat-icon-button class="action-btn edit" (click)="openDialog(bus)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-btn delete" (click)="deleteBus(bus)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && buses.length === 0">
+      <mat-icon>directions_bus</mat-icon>
+      <p>No hay unidades registradas en la base de datos.</p>
+    </div>
+
+  </div>
+</div>

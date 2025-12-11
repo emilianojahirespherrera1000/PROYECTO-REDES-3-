@@ -1,55 +1,39 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Guards
+// Componentes
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { BusesComponent } from './components/buses/buses.component';
+import { RoutesComponent } from './components/routes/routes.component';
+import { UsersComponent } from './components/users/users.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 
-// Componentes
-import { LoginComponent } from './components/login/login.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { BusListComponent } from './components/buses/bus-list/bus-list.component';
-import { BusDetailComponent } from './components/buses/bus-detail/bus-detail.component';
-import { BusTrackingComponent } from './components/buses/bus-tracking/bus-tracking.component';
-import { RouteListComponent } from './components/routes/route-list/route-list.component';
-import { RouteDetailComponent } from './components/routes/route-detail/route-detail.component';
-import { StopListComponent } from './components/stops/stop-list/stop-list.component';
-import { StopDetailComponent } from './components/stops/stop-detail/stop-detail.component';
-import { UserListComponent } from './components/users/user-list/user-list.component';
-import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
-import { SystemLogsComponent } from './components/reports/system-logs/system-logs.component';
-import { AnalyticsComponent } from './components/reports/analytics/analytics.component';
-import { ReplicationStatusComponent } from './components/replication/replication-status/replication-status.component';
 
-export const routes: Routes = [
-  // Redirigir raíz a login
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  
-  // Ruta de login (sin protección)
+const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  
-  // Dashboard protegido con AuthGuard
-  { 
-    path: 'dashboard', 
-    component: DashboardComponent,
-    canActivate: [AuthGuard], // Protección con guard
+
+  {
+    path: 'dashboard',
+    component: DashboardComponent, // El cascarón (Sidebar + Header)
+    canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'tracking', pathMatch: 'full' }, // Ruta por defecto del dashboard
-      { path: 'buses', component: BusListComponent },
-      { path: 'buses/:id', component: BusDetailComponent },
-      { path: 'tracking', component: BusTrackingComponent },
-      { path: 'routes', component: RouteListComponent },
-      { path: 'routes/:id', component: RouteDetailComponent },
-      { path: 'stops', component: StopListComponent },
-      { path: 'stops/:id', component: StopDetailComponent },
-      { path: 'users', component: UserListComponent },
-      { path: 'users/:id', component: UserDetailComponent },
-      { path: 'logs', component: SystemLogsComponent },
-      { path: 'analytics', component: AnalyticsComponent },
-      { path: 'replication', component: ReplicationStatusComponent }
+      // Si la URL es /dashboard, carga el Overview
+      { path: '', component: OverviewComponent },
+      
+      // Si la URL es /dashboard/buses, carga la Tabla de Combis
+      { path: 'buses', component: BusesComponent },
+      { path: 'routes', component: RoutesComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'settings', component: SettingsComponent },
+      
+      // Redirecciones útiles
+      { path: 'tracking', redirectTo: '', pathMatch: 'full' }
     ]
   },
-  
-  // Cualquier ruta no encontrada redirige a login
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];
 

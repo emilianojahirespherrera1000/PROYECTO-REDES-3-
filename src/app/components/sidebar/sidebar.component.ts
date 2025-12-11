@@ -1,13 +1,14 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router'; // <--- Importa NavigationEnd
+import { filter } from 'rxjs/operators'; // <--- Importa filter
 
 @Component({
   selector: 'app-sidebar',
-  standalone: false, // <--- OBLIGATORIO
+  standalone: false,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Input() isOpen = true;
   @Output() toggleSidebar = new EventEmitter<void>();
 
@@ -15,24 +16,47 @@ export class SidebarComponent {
     { id: 'dashboard', icon: 'dashboard', label: 'Dashboard', route: '/dashboard', color: 'blue' },
     { id: 'buses', icon: 'directions_bus', label: 'Gestión Combis', route: '/dashboard/buses', color: 'red' },
     { id: 'routes', icon: 'route', label: 'Rutas', route: '/dashboard/routes', color: 'blue' },
-    { id: 'stops', icon: 'place', label: 'Paradas', route: '/dashboard/stops', color: 'red' },
     { id: 'users', icon: 'people', label: 'Usuarios', route: '/dashboard/users', color: 'blue' },
-    { id: 'tracking', icon: 'my_location', label: 'Tracking Live', route: '/dashboard/tracking', color: 'red' },
-    { id: 'replication', icon: 'storage', label: 'Replicación', route: '/dashboard/replication', color: 'blue' },
-    { id: 'logs', icon: 'description', label: 'Logs Sistema', route: '/dashboard/logs', color: 'red' },
     { id: 'settings', icon: 'settings', label: 'Configuración', route: '/dashboard/settings', color: 'blue' }
   ];
 
   activeRoute = 'dashboard';
 
   constructor(private router: Router) {
-    this.router.events.subscribe(() => {
-      const currentRoute = this.router.url;
-      const activeItem = this.menuItems.find(item => currentRoute.includes(item.id));
-      if (activeItem) {
-        this.activeRoute = activeItem.id;
-      }
+    // CORRECCIÓN: Usamos pipe y filter para escuchar solo cuando termina la navegación
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.updateActiveItem(event.urlAfterRedirects);
     });
+  }
+
+  ngOnInit(): void {
+    // Checar ruta inicial al cargar
+    this.updateActiveItem(this.router.url);
+  }
+
+  private updateActiveItem(url: string): void {
+    // LÓGICA CORREGIDA:
+    
+    // 1. Caso especial: Si es exactamente '/dashboard', activamos dashboard
+    if (url === '/dashboard' || url === '/dashboard/') {
+      this.activeRoute = 'dashboard';
+      return;
+    }
+
+    // 2. Para los demás, buscamos coincidencia EXACTA de la ruta o que incluya el ID
+    // pero ignorando el ID 'dashboard' para evitar falsos positivos
+    const activeItem = this.menuItems.find(item => 
+      item.id !== 'dashboard' && url.includes(item.route)
+    );
+
+    if (activeItem) {
+      this.activeRoute = activeItem.id;
+    } else {
+      // Si no coincide con ninguno específico, por defecto dashboard
+      this.activeRoute = 'dashboard';
+    }
   }
 
   onToggleSidebar(): void {

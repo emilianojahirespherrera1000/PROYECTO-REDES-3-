@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>ID Usuario</mat-label>
+      <input matInput formControlName="id" placeholder="Ej: 3">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Usuario (Login)</mat-label>
+      <input matInput formControlName="username" placeholder="Ej: soporte1">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Ocultar contraseña'">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email Corporativo</mat-label>
+      <input matInput formControlName="email" placeholder="soporte@rutasmart.mx">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="rol">
+        <mat-option value="Super Admin">Super Admin</mat-option>
+        <mat-option value="Gerente">Gerente</mat-option>
+        <mat-option value="Soporte">Soporte</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button class="gradient-blue-red btn-save-dialog" [disabled]="form.invalid" (click)="save()">Guardar</button>
+</mat-dialog-actions>

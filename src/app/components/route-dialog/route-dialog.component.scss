@@ -1,0 +1,46 @@
+/* Título del Diálogo */
+h2[mat-dialog-title] {
+    margin: 0;
+    padding: 20px 24px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc; /* Fondo gris muy claro para el título */
+}
+
+/* Contenido del Formulario */
+mat-dialog-content {
+    padding: 24px !important; /* Forza el padding interno */
+    margin: 0 !important;
+}
+
+.dialog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Espacio vertical entre los inputs */
+    min-width: 350px; /* Ancho mínimo para que no se vea aplastado */
+
+    /* Hacemos que los campos ocupen todo el ancho disponible */
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+/* Acciones (Botones de abajo) */
+mat-dialog-actions {
+    padding: 16px 24px !important;
+    margin: 0 !important;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end; /* Botones a la derecha */
+    gap: 8px;
+    background-color: #fff;
+}
+
+/* Ajuste para el botón de guardar dentro del diálogo */
+.btn-save-dialog {
+    /* Asegura que el texto sea blanco si usas el gradiente */
+    color: white !important; 
+    font-weight: 500;
+}

@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Unidad' : 'Nueva Unidad' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+
+    <mat-form-field appearance="outline">
+      <mat-label>ID Unidad</mat-label>
+      <input matInput formControlName="id" placeholder="Ej: A-107" [readonly]="!!data">
+      <mat-icon matSuffix>badge</mat-icon>
+      <mat-hint *ngIf="!data">Este ID será único en el sistema</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Placa</mat-label>
+      <input matInput formControlName="placa" placeholder="Ej: AGS-998-Z">
+      <mat-icon matSuffix>directions_car</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" placeholder="Ej: Nissan Urvan 2023">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Chofer Asignado</mat-label>
+      <input matInput formControlName="chofer" placeholder="Nombre completo">
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Asignar Ruta</mat-label>
+      <mat-select formControlName="routeId">
+        
+        <mat-option *ngFor="let route of availableRoutes" [value]="route.id">
+          <span style="font-weight: 500;">{{ route.id }}</span> 
+          <span style="color: #64748b; font-size: 0.9em;"> ({{ route.nombre }})</span>
+        </mat-option>
+
+        <mat-option *ngIf="availableRoutes.length === 0" value="R-01" disabled>
+          No hay rutas disponibles
+        </mat-option>
+
+      </mat-select>
+      <mat-icon matSuffix>alt_route</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado Operativo</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Activo">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <mat-icon style="color: #10b981; font-size: 20px; width: 20px; height: 20px;">check_circle</mat-icon>
+            <span>Activo</span>
+          </div>
+        </mat-option>
+        <mat-option value="Mantenimiento">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <mat-icon style="color: #f59e0b; font-size: 20px; width: 20px; height: 20px;">build</mat-icon>
+            <span>Mantenimiento</span>
+          </div>
+        </mat-option>
+        <mat-option value="Inactivo">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <mat-icon style="color: #ef4444; font-size: 20px; width: 20px; height: 20px;">block</mat-icon>
+            <span>Inactivo</span>
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  
+  <button mat-raised-button 
+          class="gradient-blue-red btn-save-dialog" 
+          [disabled]="form.invalid" 
+          (click)="save()">
+    <mat-icon style="margin-right: 5px;">save</mat-icon>
+    Guardar
+  </button>
+</mat-dialog-actions>

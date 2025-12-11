@@ -1,0 +1,97 @@
+<div class="page-container">
+  
+  <div class="page-header">
+    <div class="header-text">
+      <h2 class="page-title">Configuración del Sistema</h2>
+      <p class="page-subtitle">Ajustes generales, mantenimiento de base de datos y seguridad.</p>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+
+    <div class="settings-card">
+      <div class="card-header">
+        <mat-icon class="icon-blue">tune</mat-icon>
+        <h3>Preferencias de Interfaz</h3>
+      </div>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="label">Modo Oscuro</span>
+          <span class="desc">Cambiar tema de la aplicación</span>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="darkMode">
+          <label for="darkMode"></label>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="label">Notificaciones de Escritorio</span>
+          <span class="desc">Alertas sobre retrasos en rutas</span>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="notif" checked>
+          <label for="notif"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <div class="card-header">
+        <mat-icon class="icon-green">dns</mat-icon>
+        <h3>Mantenimiento de Datos (NFS)</h3>
+      </div>
+
+      <div class="action-row">
+        <div class="action-info">
+          <span class="label">Poblar Base de Datos</span>
+          <span class="desc">Genera archivos JSON cifrados con datos de prueba (Seed).</span>
+        </div>
+        <button mat-flat-button color="primary" [disabled]="loading" (click)="executeAction('seed')">
+          <mat-icon>cloud_upload</mat-icon>
+          Ejecutar Seed
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="action-row">
+        <div class="action-info">
+          <span class="label">Reiniciar Simulación</span>
+          <span class="desc">Resetea las coordenadas de las combis al origen.</span>
+        </div>
+        <button mat-stroked-button color="primary" [disabled]="loading" (click)="executeAction('reset')">
+          <mat-icon>restart_alt</mat-icon>
+          Reiniciar
+        </button>
+      </div>
+    </div>
+
+    <div class="settings-card danger-zone">
+      <div class="card-header">
+        <mat-icon class="icon-red">security</mat-icon>
+        <h3>Zona de Seguridad</h3>
+      </div>
+
+      <div class="action-row">
+        <div class="action-info">
+          <span class="label">Actualizar Llaves RSA</span>
+          <span class="desc">Genera nuevas llaves de 2048 bits. Requiere reinicio del servidor.</span>
+        </div>
+        <button mat-raised-button color="warn" [disabled]="loading" (click)="executeAction('security')">
+          <mat-icon>vpn_key</mat-icon>
+          Actualizar Keys
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="console-output" *ngIf="consoleMessage" [class.error]="isError">
+    <mat-icon>{{ isError ? 'error' : 'terminal' }}</mat-icon>
+    <span>{{ consoleMessage }}</span>
+  </div>
+
+</div>

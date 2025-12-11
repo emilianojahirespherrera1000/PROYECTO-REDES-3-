@@ -1,0 +1,216 @@
+// Animación de entrada
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-container {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* --- HEADER --- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .page-subtitle {
+    color: #64748b;
+    margin: 0.25rem 0 0 0;
+    font-size: 0.95rem;
+  }
+}
+
+.btn-add {
+  color: white !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0 20px;
+  height: 42px;
+  
+  mat-icon { margin-right: 8px; }
+}
+
+/* --- TARJETA PRINCIPAL --- */
+.content-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  overflow: hidden; // Para bordes redondeados en la tabla
+}
+
+/* --- TABLA MODERNA --- */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  
+  th {
+    text-align: left;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    color: #334155;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background-color: #f8fafc;
+  }
+}
+
+/* --- ELEMENTOS DE LA TABLA --- */
+.id-badge {
+  font-weight: 700;
+  color: #1e3a8a;
+  background: #eff6ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.bus-info {
+  display: flex;
+  flex-direction: column;
+  
+  .bus-model { font-weight: 600; color: #1e293b; }
+  .bus-plate { font-size: 0.8rem; color: #94a3b8; }
+}
+
+.driver-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .driver-avatar {
+    width: 32px;
+    height: 32px;
+    background: #e2e8f0;
+    color: #64748b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+}
+
+/* --- STATUS PILLS (Badges) --- */
+.status-pill {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+
+  &.status-active {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+
+  &.status-maintenance {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  
+  &.status-stopped {
+    background-color: #f3f4f6;
+    color: #4b5563;
+  }
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.text-right { text-align: right; }
+
+.action-btn {
+  color: #94a3b8;
+  transition: all 0.2s;
+  
+  &:hover { background-color: #f1f5f9; }
+  &.edit:hover { color: #3b82f6; }
+  &.delete:hover { color: #ef4444; }
+}
+
+/* --- LOADING & EMPTY STATES --- */
+.loading-state, .empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #64748b;
+  
+  p { margin-top: 1rem; }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+}
+
+/* --- Botones de Acción Principal (Ej: Nueva Unidad) --- */
+.btn-primary-action {
+    /* Fuerza el texto a blanco */
+    color: black !important; 
+    
+    /* Un poco más alto y con padding lateral para presencia */
+    height: 48px !important; 
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 12px !important; /* Bordes más redondeados */
+    
+    /* Asegura que el icono se vea blanco también */
+    mat-icon {
+        color: white;
+        margin-right: 8px;
+    }
+
+    /* Efecto hover sutil */
+    &:hover {
+        opacity: 0.9;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); /* Sombra azulita al pasar el mouse */
+    }
+}

@@ -1,6 +1,28 @@
-// App component styles
-:host {
-  display: block;
-  height: 100%;
-  width: 100%;
+// src/styles.scss
+
+/* ESTILOS GLOBALES COMPARTIDOS */
+
+.gradient-blue-red {
+  background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 100%);
+}
+
+// Reseteo básico de márgenes para párrafos en tarjetas
+p {
+  margin: 0;
+}
+
+// Scrollbar bonita para el contenido
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8; 
 }

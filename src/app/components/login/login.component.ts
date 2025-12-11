@@ -40,69 +40,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Validar formulario
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) return;
 
     this.loading = true;
     this.errorMessage = '';
-
     const { username, password } = this.loginForm.value;
 
-    // ============================================================
-    // MODO DEMO: Autenticación sin backend
-    // ============================================================
-    if (username === 'admin' && password === 'admin123') {
-      // Simular respuesta exitosa del servidor
-      const mockUser = {
-        id: '1',
-        username: 'admin',
-        email: 'admin@rutasmart.mx',
-        role: 'admin'
-      };
-      
-      const mockToken = 'mock-jwt-token-' + Date.now();
-      
-      // Guardar en localStorage (simula lo que haría el AuthService)
-      localStorage.setItem('currentUser', JSON.stringify(mockUser));
-      localStorage.setItem('token', mockToken);
-      
-      this.loading = false;
-      console.log('✅ Login exitoso (modo demo)');
-      
-      // Redirigir al dashboard
-      this.router.navigate([this.returnUrl]);
-      return;
-    }
-
-    // ============================================================
-    // MODO PRODUCCIÓN: Intentar login real con API
-    // ============================================================
     this.authService.login(username, password).subscribe({
-      next: (response) => {
+      next: (res) => {
+        // El login fue exitoso en Java (leyendo users.json)
         this.loading = false;
-        console.log('✅ Login exitoso con API:', response);
-        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['/dashboard']);
       },
-      error: (error) => {
+      error: (err) => {
         this.loading = false;
-        
-        // Si las credenciales son incorrectas
-        if (error.status === 401) {
-          this.errorMessage = 'Usuario o contraseña incorrectos';
-        } 
-        // Si el servidor no está disponible
-        else if (error.status === 0) {
-          this.errorMessage = 'No se puede conectar al servidor. Usando modo demo.';
-          console.warn('⚠️ Backend no disponible. Intenta: admin / admin123');
-        } 
-        // Otros errores
-        else {
-          this.errorMessage = 'Error al iniciar sesión. Intenta nuevamente.';
-        }
-        
-        console.error('❌ Login error:', error);
+        // Muestra el mensaje que viene del backend o uno genérico
+        this.errorMessage = err.message || 'Usuario o contraseña incorrectos';
       }
     });
   }
